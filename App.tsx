@@ -12,12 +12,16 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import 'react-native-gesture-handler';
 import Routes from './src/routes';
+import {TailwindProvider} from 'tailwind-rn';
+import utilities from './tailwind.json';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Routes />
-    </NavigationContainer>
+    <TailwindProvider utilities={utilities}>
+      <NavigationContainer>
+        <Routes />
+      </NavigationContainer>
+    </TailwindProvider>
   );
 };
 

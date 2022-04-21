@@ -1,62 +1,44 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useEffect} from 'react';
-import CategoryPreview from '../../components/CategoryPreview';
-import ImagePreview from '../../components/ImagePreview';
-import {
-  BoldTitle,
-  CategoriesWrapper,
-  Container,
-  ImageCarousel,
-  ScrollView,
-} from './styles';
+import React, {useEffect, useState} from 'react';
+import {ActivityIndicator, ListRenderItem, View} from 'react-native';
+import {useTailwind} from 'tailwind-rn/dist';
+import ImageCard, {ImageCardProps} from '../../components/ImageCard';
+import api from '../../services/api';
+import ImageEntry from '../../shared/interfaces/image.interface';
+import {Container, ScrollList, ScrollWrapper} from './styles';
 
 const Home: React.FC = () => {
-  const imageUrl = 'https://wallpaperaccess.com/full/1998781.jpg';
+  const tailwind = useTailwind();
+  const [images, setImages] = useState<ImageEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await api.get('/images');
+        setImages(res.data.content);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  if (loading) return <ActivityIndicator size="large" />;
 
   return (
     <Container>
-      <ScrollView>
-        <BoldTitle>Best of the Week</BoldTitle>
-        <ImageCarousel
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{paddingRight: 16}}>
-          <ImagePreview title="" imageUrl={imageUrl} />
-          <ImagePreview
-            title=""
-            imageUrl={
-              'https://i.pinimg.com/originals/c3/d7/2d/c3d72d99ea26f7b9b83b7a0e6e3736f2.jpg'
-            }
-          />
-          <ImagePreview title="" imageUrl={imageUrl} />
-          <ImagePreview title="" imageUrl={imageUrl} />
-          <ImagePreview title="" imageUrl={imageUrl} />
-          <ImagePreview title="" imageUrl={imageUrl} />
-        </ImageCarousel>
-        <BoldTitle>Newest</BoldTitle>
-        <ImageCarousel
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{paddingRight: 16}}>
-          <ImagePreview title="" imageUrl={imageUrl} />
-          <ImagePreview title="" imageUrl={imageUrl} />
-          <ImagePreview title="" imageUrl={imageUrl} />
-          <ImagePreview title="" imageUrl={imageUrl} />
-          <ImagePreview title="" imageUrl={imageUrl} />
-          <ImagePreview title="" imageUrl={imageUrl} />
-        </ImageCarousel>
-        <BoldTitle>Categories</BoldTitle>
-        <CategoriesWrapper>
-          <CategoryPreview />
-          <CategoryPreview />
-          <CategoryPreview />
-          <CategoryPreview />
-          <CategoryPreview />
-          <CategoryPreview />
-          <CategoryPreview />
-          <CategoryPreview />
-        </CategoriesWrapper>
-      </ScrollView>
+      <ScrollWrapper>
+        <ScrollList
+          data={images}
+          renderItem={({item}: any) => {
+            return <ImageCard image={item} />;
+          }}
+          keyExtractor={item => (item as any).id}
+          numColumns={2}
+          scrollEnabled
+          contentContainerStyle={{flexGrow: 1}}
+        />
+      </ScrollWrapper>
     </Container>
   );
 };

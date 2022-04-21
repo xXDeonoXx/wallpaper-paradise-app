@@ -1,29 +1,15 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
+  height: 100%;
+`;
+
+export const ScrollWrapper = styled.View`
   flex: 1;
-  background-color: #dbeaf1;
-
-  /* width: 100%; */
 `;
 
-export const ScrollView = styled.ScrollView``;
-
-export const BoldTitle = styled.Text`
-  font-weight: bold;
-  font-size: 16px;
-  padding: 12px 16px;
-  color: black;
-`;
-
-export const ImageCarousel = styled.ScrollView`
+export const ScrollList = styled.FlatList`
   width: 100%;
-  padding-left: 16px;
-`;
-
-export const CategoriesWrapper = styled.View`
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 0px 16px;
-  justify-content: space-between;
+  height: 100%;
+  flex: 1;
 `;

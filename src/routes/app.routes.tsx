@@ -17,20 +17,20 @@ const AppRoutes = () => {
       <Stack.Screen
         name="Home"
         component={Home}
-        options={{
-          header: () => {
-            return <></>;
-          },
-        }}
+        // options={{
+        //   header: () => {
+        //     return <></>;
+        //   },
+        // }}
       />
       <Stack.Screen
         name="ImageVisualization"
         component={ImageVisualization}
-        options={{
-          header: () => {
-            return <></>;
-          },
-        }}
+        // options={{
+        //   header: () => {
+        //     return <></>;
+        //   },
+        // }}
       />
     </Stack.Navigator>
   );
