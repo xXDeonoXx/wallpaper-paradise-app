@@ -1,27 +1,71 @@
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-
 // pages
 import Home from '../pages/Home';
 import ImageVisualization from '../pages/ImageVisualization';
 
+type Category = {
+  id: number;
+  name: string;
+};
+
+export const categories: Category[] = [
+  {
+    id: 1,
+    name: 'Anime',
+  },
+  {
+    id: 2,
+    name: 'Ghibli',
+  },
+  {
+    id: 3,
+    name: 'Landscapes',
+  },
+  {
+    id: 4,
+    name: 'Vaporwave',
+  },
+];
+
 export type StackParamList = {
-  Home: undefined;
+  Feed: {feedCategory: Category};
   ImageVisualization: {imageUrl: string};
 };
-const AppRoutes = () => {
-  const Stack = createStackNavigator<StackParamList>();
 
+const Stack = createStackNavigator<StackParamList>();
+const Drawer = createDrawerNavigator();
+
+const AppRoutes = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <>
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Recent" component={Feed} />
+        {categories.map(category => {
+          return (
+            <Drawer.Screen
+              name={category.name}
+              component={Feed}
+              key={category.id}
+            />
+          );
+        })}
+      </Drawer.Navigator>
+    </>
+  );
+};
+
+const Feed = ({route}: any) => {
+  return (
+    <Stack.Navigator initialRouteName="Feed">
       <Stack.Screen
-        name="Home"
+        name="Feed"
         component={Home}
-        // options={{
-        //   header: () => {
-        //     return <></>;
-        //   },
-        // }}
+        options={{headerShown: false}}
+        initialParams={{
+          feedCategory: categories.find(cat => cat.name == route.name),
+        }}
       />
       <Stack.Screen
         name="ImageVisualization"
