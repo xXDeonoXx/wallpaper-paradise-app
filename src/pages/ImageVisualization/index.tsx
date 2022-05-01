@@ -1,8 +1,15 @@
-import {RouteProp, useRoute} from '@react-navigation/core';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React from 'react';
+import React, {useState} from 'react';
+import MyButton from '../../components/Button';
 import {StackParamList} from '../../routes/app.routes';
-import {Container, Image} from './styles';
+import {
+  Container,
+  Image,
+  ImageTitle,
+  OverlayContainerBottom,
+  OverlayContainerTop,
+} from './styles';
 
 export type imageVisualizationProps = StackNavigationProp<
   StackParamList,
@@ -10,14 +17,28 @@ export type imageVisualizationProps = StackNavigationProp<
 >;
 
 const ImageVisualization = () => {
+  const navigation = useNavigation();
   const route = useRoute<RouteProp<StackParamList, 'ImageVisualization'>>();
-  const imageUrl = 'https://wallpaperaccess.com/full/1998781.jpg';
+  const [image] = useState(route?.params?.image);
+
+  const handleBack = () => {
+    navigation.goBack();
+  };
+
+  const handleSetAs = () => {};
 
   return (
     <Container>
-      {route?.params?.imageUrl && (
-        <Image source={{uri: route.params.imageUrl}} />
-      )}
+      {image && <Image source={{uri: image.url}} />}
+      <OverlayContainerTop>
+        <ImageTitle>
+          {image.title} by {image.uploader.nickname}
+        </ImageTitle>
+      </OverlayContainerTop>
+      <OverlayContainerBottom>
+        <MyButton label="BACK" onPress={handleBack} />
+        <MyButton label="SET AS" onPress={handleSetAs} />
+      </OverlayContainerBottom>
     </Container>
   );
 };

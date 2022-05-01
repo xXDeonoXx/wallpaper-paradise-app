@@ -23,7 +23,7 @@ const ImageCard = ({image}: ImageCardProps) => {
     <TouchableOpacity
       style={tailwind(`w-1/2 h-64 border`)}
       onPress={() => {
-        navigation.navigate('ImageVisualization', {imageUrl: image.url});
+        navigation.navigate('ImageVisualization', {image: image});
       }}>
       <Image
         style={{...tailwind(`w-full h-full`)}}

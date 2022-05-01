@@ -5,6 +5,7 @@ import getTheme from '../../theme';
 // pages
 import Home from '../pages/Home';
 import ImageVisualization from '../pages/ImageVisualization';
+import ImageEntry from '../shared/interfaces/image.interface';
 
 type Category = {
   id: number;
@@ -32,7 +33,7 @@ export const categories: Category[] = [
 
 export type StackParamList = {
   Feed: {feedCategory: Category};
-  ImageVisualization: {imageUrl: string};
+  ImageVisualization: {image: ImageEntry};
 };
 
 const Stack = createStackNavigator<StackParamList>();

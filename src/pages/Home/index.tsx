@@ -15,7 +15,7 @@ const Home = ({route}: Props) => {
   // const tailwind = useTailwind();
   const [images, setImages] = useState<ImageEntry[]>([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState<Category>(route.params.feedCategory);
+  const [category] = useState<Category>(route.params.feedCategory);
 
   useEffect(() => {
     (async () => {
