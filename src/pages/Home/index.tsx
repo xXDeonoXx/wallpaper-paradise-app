@@ -9,10 +9,11 @@ import {StackParamList} from '../../routes/app.routes';
 import {StackScreenProps} from '@react-navigation/stack';
 import Category from '../../shared/interfaces/category.interface';
 import {transformRequestOptions} from '../../utils/axios-helpers';
+import {CommonActions} from '@react-navigation/native';
 
 type Props = StackScreenProps<StackParamList, 'Feed'>;
 
-const Home = ({route}: Props) => {
+const Home = ({route, navigation}: Props) => {
   // const tailwind = useTailwind();
   const [images, setImages] = useState<ImageEntry[]>([]);
   const [loading, setLoading] = useState(true);

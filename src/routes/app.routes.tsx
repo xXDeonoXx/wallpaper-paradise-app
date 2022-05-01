@@ -40,7 +40,10 @@ const Drawer = createDrawerNavigator();
 const AppRoutes = () => {
   return (
     <>
-      <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Navigator
+        screenOptions={{
+          unmountOnBlur: true,
+        }}>
         <Drawer.Screen name="Recent" component={Feed} />
         {categories.map(category => {
           return (
