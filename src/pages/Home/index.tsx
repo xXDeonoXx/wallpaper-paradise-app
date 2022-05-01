@@ -1,19 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, Text} from 'react-native';
-import {useTailwind} from 'tailwind-rn/dist';
-import ImageCard from '../../components/ImageCard';
-import api from '../../services/api';
-import ImageEntry from '../../shared/interfaces/image.interface';
-import {Container, ScrollList, ScrollWrapper} from './styles';
-import {StackParamList} from '../../routes/app.routes';
 import {StackScreenProps} from '@react-navigation/stack';
+import React, {useEffect, useState} from 'react';
+import ImageCard from '../../components/ImageCard';
+import LoadingScreen from '../../components/LoadingScreen';
+import {StackParamList} from '../../routes/app.routes';
+import api from '../../services/api';
 import Category from '../../shared/interfaces/category.interface';
+import ImageEntry from '../../shared/interfaces/image.interface';
 import {transformRequestOptions} from '../../utils/axios-helpers';
-import {CommonActions} from '@react-navigation/native';
+import {Container, ScrollList, ScrollWrapper} from './styles';
 
 type Props = StackScreenProps<StackParamList, 'Feed'>;
 
-const Home = ({route, navigation}: Props) => {
+const Home = ({route}: Props) => {
   // const tailwind = useTailwind();
   const [images, setImages] = useState<ImageEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -39,7 +37,7 @@ const Home = ({route, navigation}: Props) => {
     })();
   }, [category]);
 
-  if (loading) return <ActivityIndicator size="large" />;
+  if (loading) return <LoadingScreen />;
 
   return (
     <Container>

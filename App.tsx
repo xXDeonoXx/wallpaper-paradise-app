@@ -14,12 +14,16 @@ import 'react-native-gesture-handler';
 import Routes from './src/routes';
 import {TailwindProvider} from 'tailwind-rn';
 import utilities from './tailwind.json';
+import {ThemeProvider} from 'styled-components';
+import getTheme from './theme';
 
 const App = () => {
   return (
     <TailwindProvider utilities={utilities}>
       <NavigationContainer>
-        <Routes />
+        <ThemeProvider theme={getTheme()}>
+          <Routes />
+        </ThemeProvider>
       </NavigationContainer>
     </TailwindProvider>
   );

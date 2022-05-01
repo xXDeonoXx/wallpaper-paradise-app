@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
   height: 100%;
+  background-color: ${({theme}) => theme.colors.background};
 `;
 
 export const ScrollWrapper = styled.View`

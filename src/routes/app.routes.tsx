@@ -1,6 +1,7 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
+import getTheme from '../../theme';
 // pages
 import Home from '../pages/Home';
 import ImageVisualization from '../pages/ImageVisualization';
@@ -36,6 +37,7 @@ export type StackParamList = {
 
 const Stack = createStackNavigator<StackParamList>();
 const Drawer = createDrawerNavigator();
+const darkTheme = getTheme();
 
 const AppRoutes = () => {
   return (
@@ -43,6 +45,14 @@ const AppRoutes = () => {
       <Drawer.Navigator
         screenOptions={{
           unmountOnBlur: true,
+          headerStyle: {
+            backgroundColor: darkTheme.colors.backgroundAlternative,
+          },
+          headerTintColor: darkTheme.colors.text,
+          drawerInactiveTintColor: darkTheme.colors.text,
+          drawerContentStyle: {
+            backgroundColor: darkTheme.colors.backgroundAlternative,
+          },
         }}>
         <Drawer.Screen name="Recent" component={Feed} />
         {categories.map(category => {
@@ -73,6 +83,7 @@ const Feed = ({route}: any) => {
       <Stack.Screen
         name="ImageVisualization"
         component={ImageVisualization}
+        options={{headerShown: false}}
         // options={{
         //   header: () => {
         //     return <></>;
