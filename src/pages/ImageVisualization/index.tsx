@@ -77,8 +77,8 @@ const ImageVisualization = () => {
     // error
     if (!imagePath.length) return;
     Alert.alert(
-      'Alert Title',
-      'My Alert Msg',
+      'Set wallpaper',
+      'you can define the wallpaper as Lock or Home screen',
       [
         {
           text: 'Home Screen',
