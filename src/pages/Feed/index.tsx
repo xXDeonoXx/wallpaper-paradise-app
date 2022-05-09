@@ -28,7 +28,7 @@ const Feed = ({route}: Props) => {
       };
       if (category) {
         query = {
-          params: {categories: [category?.id.toString()], page},
+          params: {categories: [category.id.toString()], page},
           paramsSerializer: (params: {[x: string]: any[]}) =>
             transformRequestOptions(params),
         };
@@ -47,7 +47,9 @@ const Feed = ({route}: Props) => {
         let query = {};
         if (category) {
           query = {
-            params: {categories: [category?.id.toString()]},
+            params: {
+              categories: [category.id.toString()],
+            },
             paramsSerializer: (params: {[x: string]: any[]}) =>
               transformRequestOptions(params),
           };
