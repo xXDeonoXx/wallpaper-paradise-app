@@ -3,7 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import getTheme from '../../theme';
 // pages
-import Home from '../pages/Home';
+import Feed from '../pages/Feed';
 import ImageVisualization from '../pages/ImageVisualization';
 import ImageEntry from '../shared/interfaces/image.interface';
 
@@ -55,7 +55,7 @@ const AppRoutes = () => {
             backgroundColor: darkTheme.colors.backgroundAlternative,
           },
         }}>
-        <Drawer.Screen name="Recent" component={Feed} />
+        <Drawer.Screen name="Recent" component={FeedStack} />
         {categories.map(category => {
           return (
             <Drawer.Screen
@@ -70,12 +70,12 @@ const AppRoutes = () => {
   );
 };
 
-const Feed = ({route}: any) => {
+const FeedStack = ({route}: any) => {
   return (
     <Stack.Navigator initialRouteName="Feed">
       <Stack.Screen
         name="Feed"
-        component={Home}
+        component={Feed}
         options={{headerShown: false}}
         initialParams={{
           feedCategory: categories.find(cat => cat.name == route.name),

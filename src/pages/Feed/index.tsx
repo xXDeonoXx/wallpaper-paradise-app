@@ -11,11 +11,36 @@ import {Container, ScrollList, ScrollWrapper} from './styles';
 
 type Props = StackScreenProps<StackParamList, 'Feed'>;
 
-const Home = ({route}: Props) => {
+const Feed = ({route}: Props) => {
   // const tailwind = useTailwind();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [images, setImages] = useState<ImageEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [category] = useState<Category>(route.params.feedCategory);
+
+  const loadMoreImages = async () => {
+    if (currentPage >= totalPages) return;
+    try {
+      const page = currentPage + 1;
+      let query: any = {
+        params: {page},
+      };
+      if (category) {
+        query = {
+          params: {categories: [category?.id.toString()], page},
+          paramsSerializer: (params: {[x: string]: any[]}) =>
+            transformRequestOptions(params),
+        };
+      }
+      const res = await api.get('/images', query);
+      console.log(res.data.content);
+      setImages([...images, ...res.data.content]);
+      setCurrentPage(currentPage + 1);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -30,6 +55,7 @@ const Home = ({route}: Props) => {
         }
         const res = await api.get('/images', query);
         setImages(res.data.content);
+        setTotalPages(res.data.totalPages);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -44,6 +70,7 @@ const Home = ({route}: Props) => {
       <ScrollWrapper>
         <ScrollList
           data={images}
+          // extraData={extraImages}
           renderItem={({item}: any) => {
             return <ImageCard image={item} />;
           }}
@@ -51,10 +78,12 @@ const Home = ({route}: Props) => {
           numColumns={2}
           scrollEnabled
           contentContainerStyle={{flexGrow: 1}}
+          onEndReached={loadMoreImages}
+          onEndReachedThreshold={0.1}
         />
       </ScrollWrapper>
     </Container>
   );
 };
 
-export default Home;
+export default Feed;
