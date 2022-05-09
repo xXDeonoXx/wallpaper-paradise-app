@@ -34,7 +34,6 @@ const Feed = ({route}: Props) => {
         };
       }
       const res = await api.get('/images', query);
-      console.log(res.data.content);
       setImages([...images, ...res.data.content]);
       setCurrentPage(currentPage + 1);
     } catch (error) {
